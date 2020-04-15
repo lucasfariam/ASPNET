@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "MBIvY40W10AKGVaijplv65/2sfHAUtkkusCRUMkbBp5QyEAvYl0qaIYGWwwAeIrWTU6hRzcZDCQ2gvUhyYSBeg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\lucas.moura\\Desktop\\ASPNET\\LojaVirtual\\LojaVirtual\\LojaVirtual.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\lucas.moura\\.nuget\\packages\\microsoft.netcore.app.ref\\3.1.0\\microsoft.netcore.app.ref.3.1.0.nupkg.sha512",
+    "C:\\Users\\lucas.moura\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\3.1.0\\microsoft.windowsdesktop.app.ref.3.1.0.nupkg.sha512"
+  ],
+  "logs": []
+}
