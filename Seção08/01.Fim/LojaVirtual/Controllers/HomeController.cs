@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using LojaVirtual.Librares.Email;
 using LojaVirtual.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
 
 namespace LojaVirtual.Controllers
 {
@@ -20,14 +22,45 @@ namespace LojaVirtual.Controllers
         }
         public IActionResult ContatoAcao()
         {
-            Contato contato = new Contato();
-            contato.Nome = HttpContext.Request.Form["nome"];
-            contato.Email = HttpContext.Request.Form["email"];
-            contato.Texto = HttpContext.Request.Form["text"];
+            try
+            {
+                //essa parte recebe os campos enviado pelo email no metodo POST
+                Contato contato = new Contato();
+                contato.Nome = HttpContext.Request.Form["nome"];
+                contato.Email = HttpContext.Request.Form["email"];
+                contato.Texto = HttpContext.Request.Form["text"];
 
-            ContatoEmail.EnviarContatoPorEmail(contato);
+                // Fazendo validação de campos email nome e texto
+                var listaMensagens = new List<ValidationResult>();
+                var contexto = new ValidationContext(contato);
+                bool isValid = Validator.TryValidateObject(contato, contexto, listaMensagens, true);
 
-            return new ContentResult() { Content = string.Format("Dados Recebido com Sucesso!<br/> Nome: {0}<br/> E-mail: {1}<br/> texto: {2}", contato.Nome, contato.Email, contato.Texto), ContentType = "text/html"};
+                if(isValid)
+                {
+                    //Essa parte chama o metodo que envia o email para o email cadastrado para receber 
+                    ContatoEmail.EnviarContatoPorEmail(contato);
+
+                    //Essa variavel criada a baixo controla se a msg vai ser exibida ou não
+                    ViewData["MSG_S"] = "Mensagem de contato enviado com sucesso!";
+                }
+                else
+                {
+                    StringBuilder sb = new StringBuilder();
+                    foreach(var texto in listaMensagens)
+                    {
+                        sb.Append(texto.ErrorMessage);
+                    }
+                    ViewData["MSG_E"] = sb.ToString();
+                }
+            }
+            catch (Exception e)
+            {   //mensagem de erro no envio de email
+                ViewData["MSG_E"] = "Opps...Aconteceu um erro tente novamente mais tarde!";
+            
+            }
+
+            return View("Contato");
+
         }
         public IActionResult Login()
         {
