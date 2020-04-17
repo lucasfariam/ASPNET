@@ -48,19 +48,19 @@ namespace LojaVirtual.Controllers
                     StringBuilder sb = new StringBuilder();
                     foreach(var texto in listaMensagens)
                     {
-                        sb.Append(texto.ErrorMessage);
+                        sb.Append(texto.ErrorMessage + "<br />");
                     }
                     ViewData["MSG_E"] = sb.ToString();
+                    //essa parte mantem os dados preenchido mesmo com o erro 
+                    ViewData["CONTATO"] = contato;
+
                 }
             }
             catch (Exception e)
             {   //mensagem de erro no envio de email
                 ViewData["MSG_E"] = "Opps...Aconteceu um erro tente novamente mais tarde!";
-            
             }
-
             return View("Contato");
-
         }
         public IActionResult Login()
         {

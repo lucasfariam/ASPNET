@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "o4KBW3tc7IHRuIlkD29ZjWpi/mLd2cEXmQJF+3NNjHnCZgKMaU92DDdR4Gsvt689WsjqWmKqIHpxvwH/3bOhKQ==",
+  "dgSpecHash": "r9NsVzsUJreS2vJX2phO8x+zBA8FhnmUy1YI4TnN5Gv0rlA9WTNV4K25SwTNzGOJD6TeaM+8piJLjKsht4+N3g==",
   "success": true,
   "projectFilePath": "C:\\Users\\lucas.moura\\Desktop\\ASPNET\\Seção08\\01.Fim\\LojaVirtual\\LojaVirtual.csproj",
   "expectedPackageFiles": [
@@ -110,9 +110,7 @@
     "C:\\Users\\lucas.moura\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.3\\system.threading.tasks.extensions.4.5.3.nupkg.sha512",
     "C:\\Users\\lucas.moura\\.nuget\\packages\\system.threading.timer\\4.3.0\\system.threading.timer.4.3.0.nupkg.sha512",
     "C:\\Users\\lucas.moura\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
-    "C:\\Users\\lucas.moura\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
-    "C:\\Users\\lucas.moura\\.nuget\\packages\\microsoft.netcore.app.ref\\3.1.0\\microsoft.netcore.app.ref.3.1.0.nupkg.sha512",
-    "C:\\Users\\lucas.moura\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\3.1.0\\microsoft.windowsdesktop.app.ref.3.1.0.nupkg.sha512"
+    "C:\\Users\\lucas.moura\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512"
   ],
   "logs": []
 }
