@@ -21,7 +21,7 @@ namespace LojaVirtual.Models
 
         [Required(ErrorMessageResourceType = typeof(Mensagem), ErrorMessageResourceName = "MSG_E001")]
         [MinLength(20, ErrorMessageResourceType = typeof(Mensagem), ErrorMessageResourceName = "MSG_E002")]
-        [MaxLength(500, ErrorMessageResourceType = typeof(Mensagem), ErrorMessageResourceName = "MSG_E003"))]
+        [MaxLength(500, ErrorMessageResourceType = typeof(Mensagem), ErrorMessageResourceName = "MSG_E003")]
         public string Texto { get; set; }
 
     }
