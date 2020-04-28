@@ -60,7 +60,6 @@ C:\Users\lucas.moura\Desktop\ASPNET\Seção08\01.Fim\LojaVirtual\bin\Debug\netco
 C:\Users\lucas.moura\Desktop\ASPNET\Seção08\01.Fim\LojaVirtual\bin\Debug\netcoreapp3.1\LojaVirtual.pdb
 C:\Users\lucas.moura\Desktop\ASPNET\Seção08\01.Fim\LojaVirtual\bin\Debug\netcoreapp3.1\LojaVirtual.Views.dll
 C:\Users\lucas.moura\Desktop\ASPNET\Seção08\01.Fim\LojaVirtual\bin\Debug\netcoreapp3.1\LojaVirtual.Views.pdb
-C:\Users\lucas.moura\Desktop\ASPNET\Seção08\01.Fim\LojaVirtual\obj\Debug\netcoreapp3.1\LojaVirtual.csprojAssemblyReference.cache
 C:\Users\lucas.moura\Desktop\ASPNET\Seção08\01.Fim\LojaVirtual\obj\Debug\netcoreapp3.1\LojaVirtual.RazorAssemblyInfo.cache
 C:\Users\lucas.moura\Desktop\ASPNET\Seção08\01.Fim\LojaVirtual\obj\Debug\netcoreapp3.1\LojaVirtual.RazorAssemblyInfo.cs
 C:\Users\lucas.moura\Desktop\ASPNET\Seção08\01.Fim\LojaVirtual\obj\Debug\netcoreapp3.1\LojaVirtual.AssemblyInfoInputs.cache

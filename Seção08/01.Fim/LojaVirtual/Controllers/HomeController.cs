@@ -8,19 +8,23 @@ using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using LojaVirtual.Database;
+using LojaVirtual.Repositories.Contracts;
 
 namespace LojaVirtual.Controllers
 {
     public class HomeController : Controller
     {
-        private LojaVirtualContext _banco;
-        public HomeController(LojaVirtualContext banco)
+        private IClienteRepository _repositoryCliente;
+        private INewsletterRepository _repositoryNewsleter;
+        public HomeController(IClienteRepository repositoryCliente, INewsletterRepository repositoryNewsletter)
         {
-            _banco = banco;
+            _repositoryCliente = repositoryCliente;
+            _repositoryNewsleter = repositoryNewsletter;
         }
         [HttpGet]
         public IActionResult Index()
         {
+          
             return View();
         }
         [HttpPost]
@@ -30,11 +34,10 @@ namespace LojaVirtual.Controllers
             if (ModelState.IsValid)
             {
                 //adicionar email ao banco salvar 
-                _banco.NewsletterEmails.Add(newsletter);
-                _banco.SaveChanges();
+                _repositoryNewsleter.Cadastrar(newsletter);
 
                 //mensagem de que deu certo
-                TempData["MSG_S"] = "Seu cadastro foi efetuado, fique atento as promoções";
+                TempData["MSG_S"] = "E-mail cadastrado! Agora você vai receber promoções especiais no seu e-mail! Fique atento as novidades!";
 
                 // TODO - adição no banco de dados.
                 return RedirectToAction(nameof(Index));
@@ -88,6 +91,7 @@ namespace LojaVirtual.Controllers
             {   //mensagem de erro no envio de email
                 ViewData["MSG_E"] = "Opps...Aconteceu um erro tente novamente mais tarde!";
             }
+            
             return View("Contato");
         }
         public IActionResult Login()
@@ -106,8 +110,9 @@ namespace LojaVirtual.Controllers
         {
             if (ModelState.IsValid)
             {
-                _banco.Add(cliente);
-                _banco.SaveChanges();
+                //Nosso controlador nao está mais ligado ao Enityframework, trabalhamos com obj ela tera a conversa com banco
+                // mas sem o controlador ter acesso, sem saber oque está fazendo. o repository cuida de salvar a requisição
+                _repositoryCliente.Cadastrar(cliente);
 
                 TempData["MSG_S"] = "Cadastro realizado com sucesso!";
 
