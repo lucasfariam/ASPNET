@@ -15,6 +15,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using LojaVirtual.Repositories;
 using LojaVirtual.Repositories.Contracts;
+using LojaVirtual.Librares.Sessao;
+using LojaVirtual.Librares.Login;
 
 namespace LojaVirtual
 {
@@ -31,8 +33,10 @@ namespace LojaVirtual
         {
             // Padrão repository sendo utilizado
             // Oque vai fazer - na hora que for necessario injetar essas classes ela vai pegar a interface, ele vai instanciar a implementação e vai nos entregar por meio da interface 
+            
+            services.AddHttpContextAccessor();
             services.AddScoped<IClienteRepository, ClienteRepository>();
-            services.AddScoped<INewsletterRepository , NewsletterRepository>();
+            services.AddScoped<INewsletterRepository, NewsletterRepository>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -43,19 +47,21 @@ namespace LojaVirtual
 
             //Session - Configuração
 
-            services.AddMemoryCache();
-            services.AddSession(options =>
-            {
+            services.AddMemoryCache(); //Guardar os dados na memória
+            services.AddSession(options => {
 
             });
+
+            services.AddScoped<Sessao>();
+            services.AddScoped<LoginCliente>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             string connection = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=LojaVirtual;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-            
+
             services.AddDbContext<LojaVirtualContext>(options => options.UseSqlServer(connection));
 
-           
+
 
         }
 
@@ -72,11 +78,12 @@ namespace LojaVirtual
                
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-            app.UseSession();
+            app.UseSession(); ;
 
 
             // https://www.site.com.br --> Qual controlador? (gestão de requisição) --> Rotas defini isso!

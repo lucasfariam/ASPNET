@@ -9,6 +9,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 using LojaVirtual.Database;
 using LojaVirtual.Repositories.Contracts;
+using Microsoft.AspNetCore.Http;
+using LojaVirtual.Librares.Login;
 
 namespace LojaVirtual.Controllers
 {
@@ -16,17 +18,21 @@ namespace LojaVirtual.Controllers
     {
         private IClienteRepository _repositoryCliente;
         private INewsletterRepository _repositoryNewsleter;
-        public HomeController(IClienteRepository repositoryCliente, INewsletterRepository repositoryNewsletter)
+        private LoginCliente _loginCliente;
+        public HomeController(IClienteRepository repositoryCliente, INewsletterRepository repositoryNewsletter, LoginCliente loginCliente)
         {
             _repositoryCliente = repositoryCliente;
             _repositoryNewsleter = repositoryNewsletter;
+            _loginCliente = loginCliente;
         }
+
         [HttpGet]
         public IActionResult Index()
         {
-          
+
             return View();
         }
+
         [HttpPost]
         public IActionResult Index([FromForm]NewsletterEmail newsletter)
         {
@@ -47,10 +53,12 @@ namespace LojaVirtual.Controllers
                 return View();
             }
         }
+
         public IActionResult Contato()
         {
             return View();
         }
+
         public IActionResult ContatoAcao()
         {
             try
@@ -66,7 +74,7 @@ namespace LojaVirtual.Controllers
                 var contexto = new ValidationContext(contato);
                 bool isValid = Validator.TryValidateObject(contato, contexto, listaMensagens, true);
 
-                if(isValid)
+                if (isValid)
                 {
                     //Essa parte chama o metodo que envia o email para o email cadastrado para receber 
                     ContatoEmail.EnviarContatoPorEmail(contato);
@@ -77,7 +85,7 @@ namespace LojaVirtual.Controllers
                 else
                 {
                     StringBuilder sb = new StringBuilder();
-                    foreach(var texto in listaMensagens)
+                    foreach (var texto in listaMensagens)
                     {
                         sb.Append(texto.ErrorMessage + "<br />");
                     }
@@ -91,12 +99,47 @@ namespace LojaVirtual.Controllers
             {   //mensagem de erro no envio de email
                 ViewData["MSG_E"] = "Opps...Aconteceu um erro tente novamente mais tarde!";
             }
-            
+
             return View("Contato");
         }
+        [HttpGet]
         public IActionResult Login()
         {
+
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Login([FromForm]Cliente cliente)
+        {
+            Cliente clienteDB = _repositoryCliente.Login(cliente.Email, cliente.Senha);
+
+            if (clienteDB != null)
+            {
+                _loginCliente.Login(clienteDB);
+
+                return new RedirectResult(Url.Action(nameof(Painel)));
+            }
+            else
+            {
+                ViewData["MSG_E"] = "Usuário não encontrado, verifique o e-mail e senha digitado!";
+                return View();
+            }
+        }
+
+        [HttpGet]
+        public IActionResult Painel()
+        {
+
+            Cliente cliente = _loginCliente.GetCliente();
+            if (cliente != null)
+            {
+                return new ContentResult() { Content = "Usuário " + cliente.Id + ". E-mail: " + cliente.Email + " - Idade: " + DateTime.Now.AddYears(cliente.Nascimento.Year).ToString("yyyy") + ". Logado!" };
+            }
+            else
+            {
+                return new ContentResult() { Content = "Acesso negado." };
+            }
         }
 
         [HttpGet]
@@ -126,5 +169,6 @@ namespace LojaVirtual.Controllers
         {
             return View();
         }
+      
     }
 }
