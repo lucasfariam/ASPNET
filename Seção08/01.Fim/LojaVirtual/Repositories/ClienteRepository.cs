@@ -15,18 +15,18 @@ namespace LojaVirtual.Repositories
         {
             _banco = banco;
         }
+        public void Cadastrar(Cliente cliente)
+        {
+            _banco.Add(cliente);
+            _banco.SaveChanges();
+            throw new NotImplementedException();
+        }
+
         public void Atualizar(Cliente cliente)
         {
             _banco.Update(cliente);
             _banco.SaveChanges();
 
-            throw new NotImplementedException();
-        }
-
-        public void Cadastrar(Cliente cliente)
-        {
-            _banco.Add(cliente);
-            _banco.SaveChanges();
             throw new NotImplementedException();
         }
 

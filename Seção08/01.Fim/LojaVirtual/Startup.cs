@@ -1,22 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using LojaVirtual.Database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using LojaVirtual.Repositories;
 using LojaVirtual.Repositories.Contracts;
-using LojaVirtual.Librares.Sessao;
-using LojaVirtual.Librares.Login;
+using LojaVirtual.Libraries.Sessao;
+using LojaVirtual.Libraries.Login;
 
 namespace LojaVirtual
 {
@@ -33,10 +27,11 @@ namespace LojaVirtual
         {
             // Padrão repository sendo utilizado
             // Oque vai fazer - na hora que for necessario injetar essas classes ela vai pegar a interface, ele vai instanciar a implementação e vai nos entregar por meio da interface 
-            
+
             services.AddHttpContextAccessor();
             services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddScoped<INewsletterRepository, NewsletterRepository>();
+            services.AddScoped<IColaboradorRepository, ColaboradorRepository>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -48,14 +43,21 @@ namespace LojaVirtual
             //Session - Configuração
 
             services.AddMemoryCache(); //Guardar os dados na memória
-            services.AddSession(options => {
+            services.AddSession(options =>
+            {
 
             });
 
             services.AddScoped<Sessao>();
             services.AddScoped<LoginCliente>();
+            services.AddScoped<LoginColaborador>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.AddMvc( options => { options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(x => "O campo deve ser preenchido!"); }
+            )
+                .SetCompatibilityVersion(version: CompatibilityVersion.Version_3_0)
+                .AddSessionStateTempDataProvider();
+
+            services.AddSession(options => { options.Cookie.IsEssential = true; });
 
             string connection = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=LojaVirtual;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
@@ -75,7 +77,7 @@ namespace LojaVirtual
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-               
+
                 app.UseHsts();
             }
 
@@ -83,8 +85,7 @@ namespace LojaVirtual
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-            app.UseSession(); ;
-
+            app.UseSession(); 
 
             // https://www.site.com.br --> Qual controlador? (gestão de requisição) --> Rotas defini isso!
             // https://www.site.com.br/Produto/Visualizar/MouseRazorZK
@@ -100,9 +101,12 @@ namespace LojaVirtual
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                name: "areas",
+                pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(
                 name: "default",
                 pattern: "/{controller=Home}/{action=Index}/{id?}");
-             });
+            });
         }
     }
 }
