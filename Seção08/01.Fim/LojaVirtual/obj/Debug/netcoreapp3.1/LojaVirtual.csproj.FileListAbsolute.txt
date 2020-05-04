@@ -201,3 +201,4 @@ C:\Users\lucas.moura\Desktop\ASPNET\Seção08\01.Fim\LojaVirtual\obj\Debug\netco
 C:\Users\lucas.moura\Desktop\ASPNET\Seção08\01.Fim\LojaVirtual\obj\Debug\netcoreapp3.1\Razor\Areas\Colaborador\Views\Home\Painel.cshtml.g.cs
 C:\Users\lucas.moura\Desktop\ASPNET\Seção08\01.Fim\LojaVirtual\obj\Debug\netcoreapp3.1\Razor\Areas\Colaborador\Views\Shared\_Layout.cshtml.g.cs
 C:\Users\lucas.moura\Desktop\ASPNET\Seção08\01.Fim\LojaVirtual\obj\Debug\netcoreapp3.1\Razor\Areas\Colaborador\Views\_ViewStart.cshtml.g.cs
+C:\Users\lucas.moura\Desktop\ASPNET\Seção08\01.Fim\LojaVirtual\obj\Debug\netcoreapp3.1\Razor\Areas\Colaborador\Views\Categoria\Index.cshtml.g.cs
